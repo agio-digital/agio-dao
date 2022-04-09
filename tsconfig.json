@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "useDefineForClassFields": true,
+    "moduleResolution": "node",
+    "jsx": "preserve",
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "target": "esnext",
+    "module": "commonjs",
+    "strict": true,
+    "outDir": "dist",
+    "lib": [
+      "esnext",
+      "dom",
+    ],
+    "allowJs": true,
+    "noImplicitAny": false
+  },
+  "include": [
+    "./src/**/*.ts",
+    "./src/**/*.d.ts",
+    "./src/**/*.tsx",
+    "./src/**/*.vue",
+    "./test",
+    "./deploy",
+    "./typechain"
+  ],
+  "exclude": [
+    "./src/contracts/typechain-types/index.ts"
+  ],
+  "files": [
+    "./hardhat.config.ts"
+  ],
+}

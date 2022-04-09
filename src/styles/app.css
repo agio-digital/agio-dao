@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root {
+  --p: 199 88.7% 48.4%;
+  --font-brand: 'Anton', Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  --font-brand-spacing:  -0.01rem;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+[disabled] {
+  opacity: 0.6;
+}
+
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.25s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.slideup-enter-active,
+.slideup-leave-active {
+  transition: opacity 0.35s ease;
+  transform: translateY(0);
+}
+
+.slideup-enter-from,
+.slideup-leave-to {
+  opacity: 0;
+  transform: translateY(50px);
+}
+
+.prose code {
+  display: block;
+  max-width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.prose li > p {
+  padding: 0;
+  margin: 0;
+}
+
+.prose img,
+.prose iframe,
+.prose video {
+  max-width: 100%;
+}
+
+.font-brand {
+  font-family: var(--font-brand);
+  font-style: italic;
+  letter-spacing: var(--font-brand-spacing);
+  font-weight: 500;
+}
+
+.brand-heavy {
+  font-family: var(--font-brand);
+  font-size: 1.25rem; 
+  font-style: italic;
+  letter-spacing: var(--font-brand-spacing);
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.text-shadow-heavy {
+  --factor: 1.5;
+  text-shadow: 0px calc(0.15em * var(--factor)) 0px rgba(0,0,0,.4),
+  0px calc(0.07em * var(--factor)) calc(0.5em * var(--factor)) rgba(0,0,0,0.15),
+  0px calc(0.12em * var(--factor)) calc(0.01em * var(--factor)) rgba(0,0,0,0.1),
+  0px calc(1.17em * var(--factor)) calc(0.15em * var(--factor)) rgba(0,0,0,0.1);
+}
+

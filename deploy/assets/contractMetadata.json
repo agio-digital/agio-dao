@@ -1,0 +1,8 @@
+{
+  "name": "AgioDAO",
+  "description": "SMART Fund",
+  "image": "ipfs://Qmbif9v8W5PKfFqraeop8coqDgc92jFda48ya5wCDoRTLS",
+  "external_link": "https://dao.agio.app",
+  "seller_fee_basis_points": 100,
+  "fee_recipient": "$FEE_RECIPIENT"
+}
