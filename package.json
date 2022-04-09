@@ -99,8 +99,7 @@
     "yorkie": "^2.0.0"
   },
   "engines": {
-    "node": ">=16",
-    "yarn": "^1.22.17"
+    "node": ">=16"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"

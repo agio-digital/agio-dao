@@ -84,7 +84,7 @@ export default defineComponent({
         class="text-2xs rounded bg-teal-400 text-white h-5 py-0 px-1 ml-3 origin-left  hidden md:inline-block logo-badge font-brand"
         target="_blank"
         href="https://nft.ethglobal.com/"
-      >NFTHACK'22</a>
+      >DAOHACK'22</a>
     </div>
 
     <button
