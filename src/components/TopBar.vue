@@ -72,7 +72,7 @@ export default defineComponent({
     >
       <span class="logo-img">
         <img
-          src="https://ipfs.io/ipfs/QmUAZhoE99k2e645Pise1fQBDGw4Ftt1p79C1N5HYVThZX"
+          src="https://ipfs.io/ipfs/QmNSry1xBkM1yjZUMHVgLKGZArKFbdN8VYZ9nW77cfpcvj"
           alt="AgioDAO"
         >
       </span>

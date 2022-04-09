@@ -5,8 +5,8 @@
 3. **Point 3** description
 4. **Point 4** description
 
-<div style="max-width: 300px">
-  <img src="https://gateway.pinata.cloud/ipfs/QmQBffMA2QUJnPDid5pjqneMg32o3UXX6dGGYDJZHUd4Tp" />
+<div style="max-width: 100px">
+  <img src="https://gateway.pinata.cloud/ipfs/QmNSry1xBkM1yjZUMHVgLKGZArKFbdN8VYZ9nW77cfpcvj" />
 </div>
 
 #### Contact us via **[Email](mailto:devs@agiodigital.com)** or find us on [Github](https://github.com/agio-digital/agio-dao)
