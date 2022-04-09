@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: yarn && yarn build
+      - run: yarn install --pure-lockfile && yarn build
         env:
           APP_URL: "${{ secrets.APP_URL }}"
           VUE_APP_URL: "${{ secrets.VUE_APP_URL }}"
