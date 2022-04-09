@@ -1,0 +1,25 @@
+{
+    "vue3snippets.enable-compile-vue-file-on-did-save-code": false
+} // {
+//     "eslint.validate": [
+//       "javascript",
+//       "html",
+//       "typescript",
+//       "json",
+//       "javascriptreact",
+//       "vue"
+//     ],
+//     "editor.codeActionsOnSave": {
+//       "source.fixAll.eslint": true,
+//       "source.fixAll.stylelint": true
+//     },
+//     "vetur.validation.template": false,
+//     "editor.tabSize": 2,
+//     "[javascript]": {
+//       "editor.tabSize": 2
+//     },
+//     "[json]": {
+//       "editor.tabSize": 2
+//     },
+//     "editor.insertSpaces": true
+//   }

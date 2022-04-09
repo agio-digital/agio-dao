@@ -22,7 +22,7 @@ yarn lint
 
 build contract artifacts
 ```
-truffle build
+yarn hh:build
 ```
 
 Prerequisites front-end
@@ -37,5 +37,5 @@ Packages:
 Prerequisites Contracts
 ```
 Packages:
-- truffle suite
+- harthat suite
 ```
