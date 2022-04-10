@@ -1,5 +1,8 @@
 {
-    "vue3snippets.enable-compile-vue-file-on-did-save-code": false
+    "vue3snippets.enable-compile-vue-file-on-did-save-code": false,
+    "files.associations": {
+        "*.json": "jsonc"
+    },
 } // {
 //     "eslint.validate": [
 //       "javascript",

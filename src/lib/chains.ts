@@ -95,10 +95,12 @@ const allChains: Chain[] = [
       "https://res.cloudinary.com/sushi-cdn/image/fetch/w_128/https://raw.githubusercontent.com/sushiswap/logos/main/network/fantom/0x74b23882a30290451A17c44f4F05243b6b58C76d.jpg",
     decimals: 18,
     symbol: "ETH",
+    ...getContracts(ChainId.Rinkeby),
     explorerUrl: "https://rinkeby.etherscan.io/",
     rpcUrl: "https://rinkeby.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161",
     swapUrl: "https://app.uniswap.org/#/swap",
     tokenListUrl: "https://www.gemini.com/uniswap/manifest.json",
+    blockSpeed: 15.5 * 1000,
   },
   {
     id: ChainId.Fantom,
