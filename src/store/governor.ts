@@ -57,7 +57,7 @@ export const useGovernorStore = defineStore("governor", {
     result: (state) => state.queryResult.result,
     token: (state) => state.queryResult.result?.erc20,
     tokenBalance: (state) =>
-      state.queryResult.result?.erc20?.balances?.[0].value || "0",
+      state.queryResult.result?.erc20?.balances?.[0]?.value || "0",
     proposals: (state) => state.queryResult.result?.governor?.proposals || [],
     tallyUrl: () => {
       const store = useStore();
