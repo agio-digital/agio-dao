@@ -113,23 +113,44 @@ const handleNavigate = (path: string) => {
       </EmptyState>
 
 
+
       <EmptyState
-        v-else-if="!governor.proposals"
+        v-else-if="!governor.proposals.length"
         v-text="'Nothing found..'"
       />
 
-      <div
-        v-else
-        class="proposals"
-      >
-        <div
-          v-for="(proposal) of governor.proposals"
-          :key="proposal.id"
-          class="proposals-col"
-        >
-          <ProposalCard :proposal="(proposal as any)" />
+
+      <template v-else>
+        <div class="flex flex-row items-center w-full justify-center items-center -mt-2">
+          <h1 class="font-medium text-xl text-slate-500 font-brand m-0">
+            Proposals
+          </h1>
+          <Button
+            class="ml-auto px-4 -my-3"
+            display="inline-block"
+            variant="alternative"
+            size="s"
+            :href="governor.tallyUrl + '/proposal/create'"
+          >
+            Create new Proposal
+          </Button>
         </div>
-      </div>
+
+        <hr class="mt-3 mb-6 border-slate-400 opacity-40">
+
+  
+        <div
+          class="proposals"
+        >
+          <div
+            v-for="(proposal) of governor.proposals"
+            :key="proposal.id"
+            class="proposals-col"
+          >
+            <ProposalCard :proposal="(proposal as any)" />
+          </div>
+        </div>
+      </template>
 
       <Footer />
     </div>

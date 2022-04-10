@@ -1,5 +1,5 @@
-<script lang="ts">import { defineComponent, ref } from "vue";
-import { fileToBase64, formatBytes } from "../lib/fs";
+<script lang="ts">import { defineComponent, ref, watch } from "vue";
+import { fileToBase64, fileToHash, formatBytes } from "../lib/fs";
 import MediaPreview from "./MediaPreview.vue";
 
 export default defineComponent({
@@ -8,28 +8,38 @@ export default defineComponent({
         label: String,
         accept: String
     },
-    emits: ["change"],
+    emits: ["change", "hash"],
     setup(_, ctx) {
         const base64 = ref("");
         const name = ref("");
         const size = ref("");
         const el = ref<null | HTMLInputElement>(null);
+        const file = ref<File>();
+
+        watch(() => file?.value, async (f) => ctx.emit("hash", f ? await fileToHash(f) : ""), {
+          deep: true,
+          immediate: true
+        })
+
         const reset = () => {
             base64.value = "";
             name.value = "";
             size.value = "";
             el.value!.value = "";
+            file.value = undefined;
         };
         const handleChange = async (event: Event) => {
             ctx.emit("change", event);
-            const file = (event.target as HTMLInputElement)?.files?.[0];
-            if (!file) {
+            const _file = (event.target as HTMLInputElement)?.files?.[0];
+
+            if (!_file) {
                 reset();
             }
             else {
-                size.value = formatBytes(file.size);
-                name.value = file.name;
-                fileToBase64(file).then((val: string) => base64.value = val)
+              file.value = _file;
+                size.value = formatBytes(_file.size);
+                name.value = _file.name;
+                fileToBase64(_file).then((val: string) => base64.value = val)
                     .catch(console.warn);
             }
         };
@@ -39,7 +49,8 @@ export default defineComponent({
             name,
             size,
             el,
-            reset
+            reset,
+            file
         };
     }
 })
@@ -60,6 +71,7 @@ export default defineComponent({
       :label="base64.startsWith('data:video') ? 'video' : base64.startsWith('data:image') ? 'image' : 'file'"
       :src="base64"
       :type="base64.startsWith('data:video') ? 'video' : base64.startsWith('data:image') ? 'image' : 'file'"
+      :file="file"
       @click="el?.click()"
     />
 

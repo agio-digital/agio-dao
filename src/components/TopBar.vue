@@ -66,15 +66,15 @@ const changeChain = async (chain: Chain) => {
           alt="AgioDAO"
         >
       </span>
-      <span class="logo-type text-slate-800 md:text-xl font-brand uppercase">
-        <span class="hidden sm:inline-block text-rose-800">Agio</span>DAO
+      <span class="logo-type text-slate-400 md:text-xl font-brand">
+        <span class="hidden sm:inline-block text-cyan-900">Agio</span>DAO
       </span>
 
       <a
-        class="text-2xs rounded bg-teal-400 text-white h-5 py-0 px-1 ml-3 origin-left hidden md:inline-block logo-badge font-brand"
+        class="text-2xs rounded bg-slate-400 text-white h-5 py-0 px-1 ml-3 origin-left hidden md:inline-block logo-badge"
         target="_blank"
         href="https://nft.ethglobal.com/"
-      >DAOHACK'22</a>
+      >DAOHacks</a>
     </div>
 
     <button

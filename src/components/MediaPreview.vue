@@ -1,39 +1,38 @@
-<script lang="ts">import { computed, defineComponent, PropType, toRefs } from "vue";
-import { formatBytes } from "../lib/fs";
-export default defineComponent({
-  props: {
-    type: {
-      type: String as PropType<"video" | "image" | "file">,
-      default: "file"
-    },
-    src: String,
-    byteSize: Number,
-    label: String
+<script lang="ts" setup>
+import { computed, defineProps, PropType, ref, toRefs, watch } from "vue";
+import { fileToHash, formatBytes } from "../lib/fs";
+
+const props = defineProps({
+  type: {
+    type: String as PropType<"video" | "image" | "file">,
+    default: "file"
   },
-  setup(props) {
-    const { byteSize, src } = toRefs(props);
-    const bytes = computed(() => {
-      const srcStr = (src.value || "");
-      const base64str = srcStr.substring(srcStr.indexOf(',') + 1)
-      //@ts-ignore
-      const base64Size = atob(base64str).length;
-      const size = byteSize.value || base64Size;
-      return +size;
-    })
-    const fileType = computed(() => "📄\n" + src.value?.split(';')?.[0]?.split('/')?.[1] || "file")
-    return {
-      bytes,
-      formatBytes,
-      fileType
-    }
-  }
+  src: String,
+  byteSize: Number,
+  label: String,
+  file: File
+})
+
+const { byteSize, src, file } = toRefs(props);
+const hash = ref("");
+const bytes = computed(() => {
+  const srcStr = (src?.value || "");
+  const base64str = srcStr.substring(srcStr.indexOf(',') + 1)
+  //@ts-ignore
+  const base64Size = atob(base64str).length;
+  const size = byteSize?.value || base64Size;
+  return +size;
+})
+const fileType = computed(() => "📄\n" + src?.value?.split(';')?.[0]?.split('/')?.[1] || "file");
+
+watch(() => file?.value, async (f) => hash.value = f ? await fileToHash(f) : "", {
+  deep: true,
+  immediate: true
 })
 </script>
 
 <template>
-  <div
-    class="rounded p-3 bg-slate-50 border hover:bg-slate-50 cursor-pointer transition hover:shadow-inner borderap"
-  >
+  <div class="rounded p-3 bg-slate-50 border hover:bg-slate-50 cursor-pointer transition hover:shadow-inner borderap">
     <div class="flex flex-row items-center">
       <div class="w-12 mr-4">
         <img

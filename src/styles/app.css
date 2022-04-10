@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;600;900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -7,7 +7,7 @@
 
 :root {
   --p: 199 88.7% 48.4%;
-  --font-brand: 'Anton', Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  --font-brand: 'Montserrat', 'Arial Bold', sans-serif;
   --font-brand-spacing:  -0.01rem;
 }
 
@@ -71,18 +71,14 @@ input[type="number"] {
 
 .font-brand {
   font-family: var(--font-brand);
-  font-style: italic;
   letter-spacing: var(--font-brand-spacing);
-  font-weight: 500;
 }
 
 .brand-heavy {
   font-family: var(--font-brand);
-  font-size: 1.25rem; 
-  font-style: italic;
   letter-spacing: var(--font-brand-spacing);
-  font-weight: 500;
-  text-transform: uppercase;
+  font-weight: 700;
+  line-height: 1.2;
 }
 
 .text-shadow-heavy {

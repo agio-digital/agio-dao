@@ -20,6 +20,7 @@ import Vote from "./Vote.vue";
 import EmptyState from "./EmptyState.vue";
 import { uniqBy } from "lodash";
 import Badge from "./Badge.vue";
+import BigNumber from "bignumber.js";
 
 const props = defineProps<{
   proposal: Proposal
@@ -91,15 +92,17 @@ const statusColor = (status: Status) => {
   else return "bg-slate-400";
 }
 
-const totalFor = computed(() => proposal.value.votecast.filter(v => v.receipt.support.support === Support.For).length)
-const totalAbstain = computed(() => proposal.value.votecast.filter(v => v.receipt.support.support === Support.Abstain).length)
-const totalAgainst = computed(() => proposal.value.votecast.filter(v => v.receipt.support.support === Support.Against).length)
+const totalFor = computed(() => proposal.value.votecast.filter(v => v.receipt.support.support === Support.For).map(v => new BigNumber(v.receipt.weight || "0").div(10 ** 18)).reduce((a, b) => a += b.toNumber(), 0))
+const totalAbstain = computed(() => proposal.value.votecast.filter(v => v.receipt.support.support === Support.Abstain).map(v => new BigNumber(v.receipt.weight || "0").div(10 ** 18)).reduce((a, b) => a += b.toNumber(), 0))
+const totalAgainst = computed(() => proposal.value.votecast.filter(v => v.receipt.support.support === Support.Against && v.receipt.weight).map(v => new BigNumber(v.receipt.weight || "0").div(10 ** 18)).reduce((a, b) => a += b.toNumber(), 0))
 const totalVoters = computed(() => uniqBy(proposal.value.votecast, v => v.voter.id).length)
-const totalVotes = computed(() => proposal.value.votecast.length);
+const totalVotes = computed(() => proposal.value.votecast.map(v => new BigNumber(v.receipt.weight || "0").div(10 ** 18)).reduce((a, b) => a += b.toNumber(), 0));
 
 const voteBar = computed(() => {
   return [totalFor.value / totalVotes.value, totalAgainst.value / totalVotes.value, totalAbstain.value / totalVotes.value]
 })
+
+const proposalUrl = computed(() => governor.tallyUrl + '/proposal/' + proposal.value.proposalId)
 </script>
 
 <template>
@@ -150,7 +153,7 @@ const voteBar = computed(() => {
 
         <div class="header-title">
           <div
-            class="text-xl text-center mb-2 truncate font-brand px-1 text-shadow-heavy"
+            class="text-xl text-center mb-2 truncate brand-heavy px-1 text-shadow-heavy"
             :class="isOpen ? 'text-2xl lg:text-3xl' : ''"
           >
             <Markdown
@@ -172,24 +175,38 @@ const voteBar = computed(() => {
         </div>
 
         <div
-          class="flex flex-row h-4 w-full rounded overflow-hidden text-white text-center uppercase font-bold"
-          style="font-size: 9px; line-height: 1.85;"
+          class="flex flex-row w-full rounded overflow-hidden text-white text-center uppercase font-bold bg-slate-200"
+          :class="isOpen ? 'h-7' : 'h-4'"
+          style="font-size: 9px;"
         >
           <span
-            class="bg-teal-400 h-full"
+            class="bg-teal-400 h-full flex items-center justify-center"
             :style="`width: ${voteBar[0] * 100}%;`"
             v-text="totalFor ? `${totalFor} for` : ''"
           />
           <span
-            class="bg-rose-800 h-full"
+            class="bg-pink-700 h-full flex items-center justify-center"
             :style="`width: ${voteBar[1] * 100}%;`"
             v-text="totalAgainst ? `${totalAgainst} against` : ''"
           />
           <span
-            class="bg-slate-400 h-full"
+            class="bg-slate-400 h-full flex items-center justify-center"
             :style="`width: ${voteBar[2] * 100}%;`"
             v-text="totalAbstain ? `${totalAbstain} abstained` : ''"
           />
+        </div>
+
+        <div
+          v-if="isOpen"
+          class="w-full mt-2"
+        >
+          <Button
+            variant="secondary"
+            size="s"
+            :href="proposalUrl"
+          >
+            Vote  
+          </Button>
         </div>
       </div>
 
@@ -263,7 +280,7 @@ const voteBar = computed(() => {
             <template #value>
               <Button
                 variant="link"
-                :href="governor.tallyUrl + '/proposal/' + proposal.proposalId"
+                :href="proposalUrl"
                 target="_blank"
                 v-text="`Open on Tally`"
               />
@@ -276,7 +293,7 @@ const voteBar = computed(() => {
           />
 
           <EmptyState
-            v-if="!totalVotes"
+            v-if="!(proposal.votecast || []).length"
             size="sm"
             v-text="'Nothing to see here...'"
           />

@@ -7,7 +7,7 @@
       >{{ voteWeight }} {{ Support[support] }}</span>
       <span
         v-if="support === Support.Against"
-        class="text-rose-600"
+        class="text-pink-700"
       >{{ voteWeight }} {{ Support[support] }}</span>
       <span
         v-if="support === Support.Abstain"

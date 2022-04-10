@@ -7,10 +7,10 @@
       class="font-semibold font-xs"
     >
       <a
-        class="rounded bg-teal-400 text-white px-1 origin-left shadow text-xs ml-2 font-brand footer-badge"
+        class="rounded bg-slate-400 text-white px-1 origin-left shadow text-xs ml-2 font-brand footer-badge"
         target="_blank"
         href="https://showcase.ethglobal.com/daohacks/agiodao-5fg8f"
-      >DAOHACK'22</a>
+      >DAOHacks</a>
     </span>
   </div>
 </template>

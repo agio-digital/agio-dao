@@ -55,9 +55,9 @@ export default defineComponent({
       primary: "bg-sky-500 hover:bg-sky-600 text-white",
       secondary: "bg-slate-200 hover:bg-slate-500 hover:text-white text-slate-700",
       alternative: "bg-slate-500 hover:bg-slate-600 text-white",
-      brand: "bg-rose-900 hover:bg-rose-800 text-white font-brand",
+      brand: "bg-pink-800 hover:bg-pink-700 text-white font-brand font-bold",
       success: "bg-teal-400 hover:bg-teal-500 text-white font-brand",
-      red: "bg-rose-700 hover:bg-rose-800 text-white",
+      red: "bg-pink-700 hover:bg-pink-800 text-white",
       tertiary: "bg-teal-500 hover:bg-teal-600 text-white",
       link: "font-medium transition text-sky-500 underline hover:text-sky-700"
     };

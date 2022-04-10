@@ -254,7 +254,7 @@ const customVoucher = computed({
       v-if="toAddress"
       v-model="toAddress"
       placeholder="Recipient address 0x..."
-      :class="!validToAddress && toAddress ? 'outline-rose-700' : ''"
+      :class="!validToAddress && toAddress ? 'outline-pink-700' : ''"
     />
 
     <hr class="my-5">
@@ -265,7 +265,7 @@ const customVoucher = computed({
       class="mb-2 rounded-md"
       @click="mint()"
     >
-      Mint NFT (2/2)
+      Mint Proof (2/2)
       <Loader
         v-if="nftMinterStore.mintingNft"
         class="ml-2"

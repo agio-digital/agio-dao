@@ -32,6 +32,7 @@ const resetMedia = () => {
 };
 
 const imagePreview = ref("");
+const hash = ref("");
 
 const onFileChange = (e: Event) => {
   const file = (e?.target as HTMLInputElement)?.files?.[0];
@@ -63,7 +64,7 @@ const previewAndMint = () => {
     >
       <div class="flex flex-row items-center">
         <h1 class="font-medium text-xl text-slate-500 font-brand">
-          Mint NFT
+          Submit Proof
         </h1>
       </div>
 
@@ -75,9 +76,19 @@ const previewAndMint = () => {
           :accept="supportedMimes.join('')"
           label="Document"
           class="mb-2"
+          @hash="hash = $event"
           @change="onFileChange"
         />
       </div>
+
+      <hr class="my-6">
+
+      <Input
+        placeholder="Hash"
+        :disabled="true"
+        class=" text-sm py-3"
+        :value="hash"
+      />
 
       <hr class="my-6">
 
