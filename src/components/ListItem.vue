@@ -3,7 +3,8 @@ import { defineProps } from "vue";
 
 defineProps({
   title: [String, Number],
-  value: [String, Number]
+  value: [String, Number],
+  valueHref: [String],
 });
 </script>
 
@@ -19,7 +20,16 @@ defineProps({
       class="w-1/2 truncate text-right font-medium"
     >
       <slot name="value-before" />
-      {{ value }}
+
+      <Button
+        v-if="valueHref"
+        variant="link"
+        :href="valueHref"
+        v-text="value"
+      />
+      <template v-else>
+        {{ value }}
+      </template>
       <slot name="value" />
     </div>
     <div v-if="$slots.default">

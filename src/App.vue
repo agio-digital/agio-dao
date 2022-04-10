@@ -10,9 +10,16 @@ import useLocalStorageRef from "./hooks/useLocalStorage";
 import { BigNumber } from "ethers";
 import { useModalsStore } from "./store/modals";
 import Footer from "./components/Footer.vue";
+import NftMinter from "./components/NftMinter.vue";
+import { defaultClient } from "./hooks/useApollo";
+import { provideApolloClient } from "@vue/apollo-composable";
+import { useGovernorStore } from "./store/governor";
+import ProposalCard from "./components/ProposalCard.vue";
 
+provideApolloClient(defaultClient);
+
+const governor = useGovernorStore();
 const readMeVal = ref(readme);
-
 const modals = useModalsStore();
 const store = useStore();
 const readmeModal = useLocalStorageRef("readmeModalv2", true);
@@ -81,42 +88,48 @@ const handleNavigate = (path: string) => {
     </div>
 
     <div class="body bg-slate-300 p-8 px-6">
-      <div>
-        <EmptyState v-if="store.loading">
-          <Loader class="mb-3" />
-          <br>Loading...
-        </EmptyState>
+      <EmptyState v-if="store.loading || governor.loading">
+        <Loader class="mb-3" />
+        <br>Loading...
+      </EmptyState>
 
-        <EmptyState v-else-if="store.unsupported">
-          {{ store.chain?.name || 'Chain' }} is not supported.
-          <div class="font-normal text-base mt-2">
-            Please
-            <Button
-              variant="link"
-              @click="openChainsModal()"
-            >
-              select
-            </Button>&nbsp;a supported chain like
-            <Button
-              variant="link"
-              @click="store.INIT({ chainId: 137 })"
-            >
-              Polygon
-            </Button>
-          </div>
-        </EmptyState>
-
+      <EmptyState v-else-if="store.unsupported">
+        {{ store.chain?.name || 'Chain' }} is not supported.
+        <div class="font-normal text-base mt-2">
+          Please
+          <Button
+            variant="link"
+            @click="openChainsModal()"
+          >
+            select
+          </Button>&nbsp;a supported chain like
+          <Button
+            variant="link"
+            @click="store.INIT({ chainId: 137 })"
+          >
+            Polygon
+          </Button>
+        </div>
+      </EmptyState>
 
 
-        <EmptyState
-          v-text="'Nothing found..'"
-        />
-      </div>
+      <EmptyState
+        v-else-if="!governor.proposals"
+        v-text="'Nothing found..'"
+      />
 
       <div
-        v-if="!store.loading"
-        class="nfts"
-      />
+        v-else
+        class="proposals"
+      >
+        <div
+          v-for="(proposal) of governor.proposals"
+          :key="proposal.id"
+          class="proposals-col"
+        >
+          <ProposalCard :proposal="(proposal as any)" />
+        </div>
+      </div>
 
       <Footer />
     </div>
@@ -261,7 +274,7 @@ const handleNavigate = (path: string) => {
   }
 }
 
-.nfts {
+.proposals {
   --gutter: 1.5rem;
   display: flex;
   flex-direction: row;
@@ -271,7 +284,7 @@ const handleNavigate = (path: string) => {
   width: calc(100% + var(--gutter));
   margin: 0 calc(var(--gutter) * -0.5);
 
-  .nft-col {
+  .proposals-col {
     width: 100%;
     padding: calc(var(--gutter) / 2);
     padding-top: 0;

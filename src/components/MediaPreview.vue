@@ -2,7 +2,10 @@
 import { formatBytes } from "../lib/fs";
 export default defineComponent({
   props: {
-    type: String as PropType<"video" | "image">,
+    type: {
+      type: String as PropType<"video" | "image" | "file">,
+      default: "file"
+    },
     src: String,
     byteSize: Number,
     label: String
@@ -17,9 +20,11 @@ export default defineComponent({
       const size = byteSize.value || base64Size;
       return +size;
     })
+    const fileType = computed(() => "📄\n" + src.value?.split(';')?.[0]?.split('/')?.[1] || "file")
     return {
       bytes,
-      formatBytes
+      formatBytes,
+      fileType
     }
   }
 })
@@ -31,21 +36,18 @@ export default defineComponent({
   >
     <div class="flex flex-row items-center">
       <div class="w-12 mr-4">
-        <video
-          v-if="type === 'video'"
-          :src="src"
-          muted
-          loop
-          autoplay
-          :poster="src || './public/img/placeholder.png'"
-          playsinline
-          class="object-cover aspect-auto rounded w-12 h-12 bg-white"
-        />
         <img
+          v-if="type === 'image'"
+          :src="src || './public/img/placeholder.png'"
+          class="object-cover aspect-auto rounded w-12 h-12 bg-white truncate border-slate-300 border"
+        >
+        <span
           v-else
           :src="src || './public/img/placeholder.png'"
-          class="object-cover aspect-auto rounded w-12 h-12 bg-white"
+          class="object-cover aspect-auto rounded w-12 h-12 bg-slate-200 inline-flex justify-center items-center font-medium whitespace-pre text-center text-2xs overflow-clip truncate p-1 border-slate-300 border"
         >
+          {{ fileType }}
+        </span>
       </div>
       <div class="truncate w-4/5">
         <div class="font-medium capitalize">

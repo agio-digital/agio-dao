@@ -6,6 +6,7 @@ import "./@openzeppelin/contracts/governance/extensions/GovernorSettings.sol";
 import "./@openzeppelin/contracts/governance/extensions/GovernorCountingSimple.sol";
 import "./@openzeppelin/contracts/governance/extensions/GovernorVotes.sol";
 import "./@openzeppelin/contracts/governance/extensions/GovernorVotesQuorumFraction.sol";
+import "./@openzeppelin/contracts/governance/compatibility/GovernorCompatibilityBravo.sol";
 
 import "./AgioERC1155.sol";
 

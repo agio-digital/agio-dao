@@ -6,6 +6,10 @@ import { computed, defineComponent, toRefs, PropType } from "vue";
 export default defineComponent({
   props: {
     value: String,
+    prose: {
+      type: Boolean,
+      default: true
+    },
     replace: Object as PropType<{
       [key: string]: string
     }>
@@ -27,7 +31,7 @@ export default defineComponent({
     })
 
     return {
-      markdown
+      markdown,
     }
   }
 })
@@ -36,7 +40,7 @@ export default defineComponent({
 <template>
   <div
     v-if="markdown"
-    class="prose prose-base"
+    :class="prose ? 'prose prose-base' : 'prose-disabled'"
     v-html="markdown"
   />
 </template>

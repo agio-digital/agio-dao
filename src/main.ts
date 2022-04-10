@@ -25,11 +25,13 @@ import TopBar from "./components/TopBar.vue";
 import Account from "./components/Account.vue";
 import ListItem from "./components/ListItem.vue";
 import StatusBadge from "./components/StatusBadge.vue";
+import Badge from "./components/Badge.vue";
 
 import { router } from "./router";
 
 import "./styles/app.css";
 import pkg from "../package.json";
+import { apolloProvider } from "./hooks/useApollo";
 
 console.log(
   `%c🕹️ ${pkg.name} ${pkg.version} 🕹️`,
@@ -45,6 +47,7 @@ pinia.use(
   })
 );
 pinia.use(piniaPluginPersistedstate);
+app.use(apolloProvider);
 app.use(router);
 app.use(Singletons);
 app.use(pinia);
@@ -55,6 +58,7 @@ app.component("Modal", Modal);
 app.component("Button", Button);
 app.component("Input", Input);
 app.component("InputRange", InputRange);
+app.component("Badge", Badge);
 app.component("InputFile", InputFile);
 app.component("Markdown", Markdown);
 app.component("Blockie", Blockie);

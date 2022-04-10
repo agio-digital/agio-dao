@@ -1,66 +1,56 @@
-<script lang="ts">
+<script lang="ts" setup>
 import { useConfigureChain, useEthereum } from "../hooks/useEthereum";
 import { useFormat } from "../hooks/useFormat";
 import { Chain } from "../lib/chains";
 import { useStore } from "../store";
-import { computed, defineComponent } from "vue";
+import { computed, defineEmits } from "vue";
 import ChainSelector from "./ChainSelector.vue";
 import Button from "./Button.vue";
 import { useModalsStore } from "../store/modals";
+import { useGovernorStore } from "../store/governor";
 
-export default defineComponent({
-  components: {
-    ChainSelector,
-    Button,
-  },
-  emits: ['navigate'],
-  setup() {
-    const format = useFormat();
-    const store = useStore();
-    const modals = useModalsStore();
+defineEmits<{
+  (event: "navigate", payload: string): void
+}>()
 
-    const chainModal = computed({
-      get: () => modals.chains,
-      set: (val: boolean) => modals.setModal('chains', val)
-    })
+const format = useFormat();
+const store = useStore();
+const modals = useModalsStore();
+const governor = useGovernorStore();
 
-    const changeChain = async (chain: Chain) => {
-      const eth = useEthereum();
-      try {
-        if (eth?.request) {
-          await eth
-            .request({
-              method: "wallet_switchEthereumChain",
-              params: [{ chainId: "0x" + chain.id.toString(16) }],
-            })
+const chainModal = computed({
+  get: () => modals.chains,
+  set: (val: boolean) => modals.setModal('chains', val)
+})
 
-        }
-        store.INIT({
-          chainId: chain.id,
-          reset: true
+const changeChain = async (chain: Chain) => {
+  const eth = useEthereum();
+  try {
+    if (eth?.request) {
+      await eth
+        .request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: "0x" + chain.id.toString(16) }],
         })
-      } catch (e: any) {
-        console.log(e);
-        const UNRECOGNIZED_CHAINID = 4902;
-        const ethereum = useEthereum();
-        if (e?.code === UNRECOGNIZED_CHAINID && ethereum.isMetaMask) {
-          store.ADD_MESSAGE({ title: "Unrecognized Chain. Add to MetaMask first" });
-          useConfigureChain(chain.id);
-        } else {
-          store.ADD_MESSAGE({ title: typeof e === "object" && e.message ? e.message : "Operation Cancelled" })
 
-        }
-      }
-    };
+    }
+    store.INIT({
+      chainId: chain.id,
+      reset: true
+    })
+  } catch (e: any) {
+    console.log(e);
+    const UNRECOGNIZED_CHAINID = 4902;
+    const ethereum = useEthereum();
+    if (e?.code === UNRECOGNIZED_CHAINID && ethereum.isMetaMask) {
+      store.ADD_MESSAGE({ title: "Unrecognized Chain. Add to MetaMask first" });
+      useConfigureChain(chain.id);
+    } else {
+      store.ADD_MESSAGE({ title: typeof e === "object" && e.message ? e.message : "Operation Cancelled" })
 
-    return {
-      store,
-      format,
-      changeChain,
-      chainModal,
-    };
-  },
-});
+    }
+  }
+};
 </script>
 
 
@@ -81,7 +71,7 @@ export default defineComponent({
       </span>
 
       <a
-        class="text-2xs rounded bg-teal-400 text-white h-5 py-0 px-1 ml-3 origin-left  hidden md:inline-block logo-badge font-brand"
+        class="text-2xs rounded bg-teal-400 text-white h-5 py-0 px-1 ml-3 origin-left hidden md:inline-block logo-badge font-brand"
         target="_blank"
         href="https://nft.ethglobal.com/"
       >DAOHACK'22</a>
@@ -134,7 +124,10 @@ export default defineComponent({
         {{ format.formatEth(store.balance || "0", "", 4) }}
         <span
           class="hidden md:inline"
-        >{{ store.chain?.symbol }}</span>
+        >{{ store.chain?.symbol }}</span><span class="mx-1">|</span>
+        {{ format.formatToken(governor?.tokenBalance, "", 0) }}<span
+          class="hidden md:inline"
+        >{{ governor?.token?.symbol || '' }}</span>
       </span>
 
       <span class="flex flex-row px-2 py-1.5 font-semibold content-center items-center">

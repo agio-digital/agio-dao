@@ -1,7 +1,6 @@
 import chai from "chai";
 import hre from "hardhat";
 import { solidity } from "ethereum-waffle";
-import { ethers } from "hardhat";
 import { BigNumber as bn, utils } from "ethers";
 import { AgioSMARTDAO } from "../src/contracts/typechain-types/AgioSMARTDAO";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
@@ -41,13 +40,24 @@ describe("Deploy", () => {
 
   it("Should be able to buy AGIO", async function () {
     const buyer = signers[2];
+    const buyer2 = signers[3];
 
-    await token.connect(buyer).buyToken({
-      value: utils.parseEther("1.25"),
+    await token.connect(buyer).mint({
+      value: utils.parseEther("1000"),
     });
 
-    expect(await token.balanceOf(buyer.address)).to.equal(
-      utils.parseEther("5")
-    );
+    await token.connect(buyer).mintTo(buyer2.address, {
+      value: utils.parseEther("250"),
+    });
+
+    const balance = await token.balanceOf(buyer.address);
+    const balance2 = await token.balanceOf(buyer2.address);
+
+    expect(balance).to.equal(utils.parseEther("4000"));
+    expect(balance2).to.equal(utils.parseEther("1000"));
+
+    const totalSupply = await token.totalSupply();
+
+    expect(totalSupply).to.equal(utils.parseEther("5000"));
   });
 });

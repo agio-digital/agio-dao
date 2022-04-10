@@ -10,10 +10,11 @@ import "hardhat/console.sol";
 
 /// @custom:security-contact devs@agiodigital.com
 contract AgioGovernance is ERC20, Pausable, Ownable, ERC20Permit, ERC20Votes {
+    uint maxSupply = 5000 * 10 ** super.decimals();
     uint256 public tokenPrice = 0.25 ether;
 
-    constructor(string memory _name, string memory _symbol, uint _initialSupply) ERC20(_name, _symbol) ERC20Permit(_name) {
-        _mint(address(this), _initialSupply);
+    constructor(string memory _name, string memory _symbol, uint _initialSupply, address _reciever) ERC20(_name, _symbol) ERC20Permit(_name) {
+        _mint(_reciever, _initialSupply);
     }
 
     function pause() public onlyOwner {
@@ -56,12 +57,19 @@ contract AgioGovernance is ERC20, Pausable, Ownable, ERC20Permit, ERC20Votes {
         super._burn(account, amount);
     }
 
-    function buyToken() public payable {
+    function mint() public payable {
         require(msg.value >= tokenPrice, "MINIMUM_TOKEN_PRICE_NOT_MET");
         uint wholeTokensToReceive = msg.value / tokenPrice;
-        uint tokensToReceive = wholeTokensToReceive * 10**decimals();
-        uint tokensForSale = balanceOf(address(this));
-        require(tokensToReceive <= tokensForSale, "NOT_ENOUGH_TOKENS_FOR_SALE");
-        this.transfer(msg.sender, tokensToReceive);
+        uint tokensToReceive = wholeTokensToReceive * 10 ** super.decimals();
+        require(tokensToReceive <= maxSupply, "AMOUNT_EXCEEDS_MAX_SUPPLY");
+        _mint(msg.sender, tokensToReceive);
+    }
+
+    function mintTo(address account) public payable {
+        require(msg.value >= tokenPrice, "MINIMUM_TOKEN_PRICE_NOT_MET");
+        uint wholeTokensToReceive = msg.value / tokenPrice;
+        uint tokensToReceive = wholeTokensToReceive * 10 ** super.decimals();
+        require(tokensToReceive <= maxSupply, "AMOUNT_EXCEEDS_MAX_SUPPLY");
+        _mint(account, tokensToReceive);
     }
 }

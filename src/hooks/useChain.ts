@@ -26,22 +26,30 @@ export const useChain = (id: number) => {
     return chain.value.explorerUrl + `address/${contractAddress}#code`;
   };
 
+  const blockUrl = (block: string | number) => {
+    if (!chain.value) return "";
+
+    return chain.value.explorerUrl + `block/${block}`;
+  };
+
   const nftUrl = (tokenId?: string | number) => {
     const chainId = chain.value?.id;
     const testnet = chainId === ChainId.Mumbai || chainId === ChainId.Rinkeby;
-    let path = (chain.value?.symbol || 'eth').toLowerCase();
+    let path = (chain.value?.symbol || "eth").toLowerCase();
     if (chainId === ChainId.Mumbai) path = "mumbai";
     if (chainId === ChainId.Rinkeby) path = "rinkeby";
     const contractAddress = chain.value?.nftContractAddress;
-    const url = `https://${testnet ? 'testnets.' : ''}opensea.io/assets/${path}/${contractAddress}/${tokenId ?? ''}`;
+    const url = `https://${
+      testnet ? "testnets." : ""
+    }opensea.io/assets/${path}/${contractAddress}/${tokenId ?? ""}`;
     return url;
-  }
+  };
 
   const nftAccountUrl = (account: string) => {
     const mumbai = chain.value?.id === ChainId.Mumbai;
-    const url = `https://${mumbai ? 'testnets.' : ''}opensea.io/${account}`;
+    const url = `https://${mumbai ? "testnets." : ""}opensea.io/${account}`;
     return url;
-  }
+  };
 
   return {
     chain,
@@ -50,6 +58,7 @@ export const useChain = (id: number) => {
     buyTokenUrl,
     contractUrl,
     nftUrl,
-    nftAccountUrl
+    nftAccountUrl,
+    blockUrl,
   };
 };

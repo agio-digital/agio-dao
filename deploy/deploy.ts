@@ -7,6 +7,9 @@ import { pinJSON } from "../src/hooks/useIpfs";
 import { NftMetadata } from "../src/types/nft-metadata";
 import { assert } from "chai";
 import { Contract } from "ethers";
+import { AgioGovernance } from "../src/contracts/typechain-types/AgioGovernance";
+import { AgioSMARTDAO } from "../src/contracts/typechain-types/AgioSMARTDAO";
+import { AgioERC1155 } from "../src/contracts/typechain-types/AgioERC1155";
 
 export const hash = (value: string) =>
   hre.ethers.utils.solidityKeccak256(["string"], [value]);
@@ -81,33 +84,37 @@ async function main() {
 
   console.log("Deploying contracts with the account:", deployer.address);
 
-  const ercFactory = await hre.ethers.getContractFactory("AGIO"); // Getting the Contract
-  const timelockFactory = await hre.ethers.getContractFactory(
-    "TimelockControllerUpgradeable"
-  ); // Getting the Contract
-  const daoFactory = await hre.ethers.getContractFactory("AgioSMARTDAO"); // Getting the Contract
+  const deployFactory = await hre.ethers.getContractFactory("Deploy"); // Getting the Contract
 
   // const signerAddress = await Token.signer.getAddress();
-  const block = await daoFactory.signer.provider?.getBlockNumber();
-  const ercContract = await ercFactory.deploy();
-  const timelockContract = await timelockFactory.deploy();
-  const daoContract = await daoFactory.deploy(
-    ercContract.address,
-    timelockContract.address
-  );
+  const block = await deployFactory.signer.provider?.getBlockNumber();
+  const deployContract = await deployFactory.deploy();
+
+  await deployContract.deployed();
+
+  const token = (await hre.ethers.getContractFactory("AgioGovernance")).attach(
+    await deployContract.token()
+  ) as AgioGovernance;
+  const dao = (await hre.ethers.getContractFactory("AgioSMARTDAO")).attach(
+    await deployContract.dao()
+  ) as AgioSMARTDAO;
+  const nft = (await hre.ethers.getContractFactory("AgioERC1155")).attach(
+    await deployContract.nft()
+  ) as AgioERC1155;
 
   Object.entries({
-    AGIO: ercContract,
-    TimelockControllerUpgradeable: timelockContract,
-    AgioSMARTDAO: daoContract,
+    AgioGovernance: token,
+    AgioSMARTDAO: dao,
+    AgioERC1155: nft,
   }).forEach(([name, contract]) => {
+    console.log(contract.deployTransaction);
     const deployedContract: DeployedContract = {
       deployedAt: Date.now(),
       chainId: config.chainId ?? -1,
       address: contract.address,
       deployerAddress: deployer.address ?? "",
       name,
-      dataHash: hash(contract.deployTransaction.data),
+      dataHash: hash(contract.deployTransaction?.data || "0x"),
       block: block || 0,
     };
 

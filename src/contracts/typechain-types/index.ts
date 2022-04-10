@@ -4,6 +4,8 @@
 export type { AccessControl } from "./AccessControl";
 export type { IAccessControl } from "./IAccessControl";
 export type { Ownable } from "./Ownable";
+export type { GovernorCompatibilityBravo } from "./GovernorCompatibilityBravo";
+export type { IGovernorCompatibilityBravo } from "./IGovernorCompatibilityBravo";
 export type { GovernorCountingSimple } from "./GovernorCountingSimple";
 export type { GovernorSettings } from "./GovernorSettings";
 export type { GovernorTimelockControl } from "./GovernorTimelockControl";
@@ -35,6 +37,8 @@ export type { Deploy } from "./Deploy";
 export { AccessControl__factory } from "./factories/AccessControl__factory";
 export { IAccessControl__factory } from "./factories/IAccessControl__factory";
 export { Ownable__factory } from "./factories/Ownable__factory";
+export { GovernorCompatibilityBravo__factory } from "./factories/GovernorCompatibilityBravo__factory";
+export { IGovernorCompatibilityBravo__factory } from "./factories/IGovernorCompatibilityBravo__factory";
 export { GovernorCountingSimple__factory } from "./factories/GovernorCountingSimple__factory";
 export { GovernorSettings__factory } from "./factories/GovernorSettings__factory";
 export { GovernorTimelockControl__factory } from "./factories/GovernorTimelockControl__factory";

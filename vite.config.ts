@@ -10,7 +10,7 @@ function GraphQl() {
   return {
     name: "graphql-file",
     transform(src, id) {
-      if (id.endsWith(".graphql")) {
+      if (id.endsWith(".graphql") || id.endsWith(".gql")) {
         const str = JSON.stringify(src);
         return {
           code:

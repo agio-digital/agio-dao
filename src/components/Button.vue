@@ -59,7 +59,7 @@ export default defineComponent({
       success: "bg-teal-400 hover:bg-teal-500 text-white font-brand",
       red: "bg-rose-700 hover:bg-rose-800 text-white",
       tertiary: "bg-teal-500 hover:bg-teal-600 text-white",
-      link: "font-medium transition ml-auto text-sky-500 underline hover:text-sky-700"
+      link: "font-medium transition text-sky-500 underline hover:text-sky-700"
     };
 
     const sizes: Data = {

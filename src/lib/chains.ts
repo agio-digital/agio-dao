@@ -1,10 +1,31 @@
 import { DeployedContract } from "../types/deployed-contract";
 import deployedContracts from "../contracts/deploy-info/deploys.json";
 
-const findLastContractDeployedById = (chainId: number) => {
+const findLastContractDeployedById = (chainId: number, name: string) => {
   return (deployedContracts as DeployedContract[]).find(
-    (contract) => contract.chainId === chainId
+    (contract) => contract.chainId === chainId && contract.name === name
   );
+};
+
+const getContracts = (chainId: number): Partial<Chain> => {
+  return {
+    nftContractAddress: findLastContractDeployedById(chainId, "AgioERC1155")
+      ?.address,
+    nftContractBlock: findLastContractDeployedById(chainId, "AgioERC1155")
+      ?.block,
+    erc20ContractAddress: findLastContractDeployedById(
+      chainId,
+      "AgioGovernance"
+    )?.address,
+    erc20ContractBlock: findLastContractDeployedById(chainId, "AgioGovernance")
+      ?.block,
+    governorContractAddress: findLastContractDeployedById(
+      chainId,
+      "AgioSMARTDAO"
+    )?.address,
+    governorContractBlock: findLastContractDeployedById(chainId, "AgioSMARTDAO")
+      ?.block,
+  };
 };
 
 export interface Chain {
@@ -20,6 +41,10 @@ export interface Chain {
   waitConfirmations?: number;
   nftContractAddress?: string;
   nftContractBlock?: number;
+  erc20ContractAddress?: string;
+  erc20ContractBlock?: number;
+  governorContractAddress?: string;
+  governorContractBlock?: number;
 }
 
 export enum ChainId {
@@ -54,8 +79,7 @@ const allChains: Chain[] = [
     decimals: 18,
     rpcUrl: "https://rpc-mumbai.maticvigil.com/",
     explorerUrl: "https://mumbai.polygonscan.com/",
-    nftContractAddress: findLastContractDeployedById(ChainId.Mumbai)?.address, //"0xA76eA46d4EabABAb7F8BEE549850174bf189BD1E",
-    nftContractBlock: findLastContractDeployedById(ChainId.Mumbai)?.block,
+    ...getContracts(ChainId.Mumbai),
     logoURI: "https://mumbai.polygonscan.com/images/svg/brands/poly.png?v=1.3",
     tokenListUrl:
       "https://gist.githubusercontent.com/cwdx/5a38661dfa2f036252863c6cc6fdc551/raw/polygon-tokens.json?",
@@ -134,8 +158,7 @@ const allChains: Chain[] = [
     explorerUrl: "https://etherscan.io/",
     rpcUrl: "http://127.0.0.1:8545",
     swapUrl: "https://app.uniswap.org/#/swap",
-    nftContractAddress: findLastContractDeployedById(ChainId.Local)?.address,
-    nftContractBlock: findLastContractDeployedById(ChainId.Local)?.block,
+    ...getContracts(ChainId.Local),
     tokenListUrl:
       "https://gist.githubusercontent.com/cwdx/8229196f591c172469714c683c77a540/raw/local-tokens.json",
   },

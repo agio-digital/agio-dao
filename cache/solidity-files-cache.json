@@ -592,8 +592,8 @@
       ]
     },
     "/Users/chriswijnia/git/agio-dao/contracts/AgioSMARTDAO.sol": {
-      "lastModificationDate": 1649497449449,
-      "contentHash": "4c2b59d4cacce95196a9b61e88238733",
+      "lastModificationDate": 1649510086401,
+      "contentHash": "10f90683623de4f8994838c92a86a3a2",
       "sourceName": "contracts/AgioSMARTDAO.sol",
       "solcConfig": {
         "version": "0.8.4",
@@ -624,6 +624,7 @@
         "./@openzeppelin/contracts/governance/extensions/GovernorCountingSimple.sol",
         "./@openzeppelin/contracts/governance/extensions/GovernorVotes.sol",
         "./@openzeppelin/contracts/governance/extensions/GovernorVotesQuorumFraction.sol",
+        "./@openzeppelin/contracts/governance/compatibility/GovernorCompatibilityBravo.sol",
         "./AgioERC1155.sol"
       ],
       "versionPragmas": [
@@ -1118,8 +1119,8 @@
       ]
     },
     "/Users/chriswijnia/git/agio-dao/contracts/Deploy.sol": {
-      "lastModificationDate": 1649498199487,
-      "contentHash": "079459d7ed1e1a893a673a06fc63560d",
+      "lastModificationDate": 1649550478855,
+      "contentHash": "3ead2309daf61dbc029fbb7021ef3438",
       "sourceName": "contracts/Deploy.sol",
       "solcConfig": {
         "version": "0.8.4",
@@ -1147,7 +1148,8 @@
       "imports": [
         "./AgioERC1155.sol",
         "./AgioSMARTDAO.sol",
-        "./AgioGovernance.sol"
+        "./AgioGovernance.sol",
+        "hardhat/console.sol"
       ],
       "versionPragmas": [
         "^0.8.4"
@@ -1157,8 +1159,8 @@
       ]
     },
     "/Users/chriswijnia/git/agio-dao/contracts/AgioGovernance.sol": {
-      "lastModificationDate": 1649494238687,
-      "contentHash": "cc085dacc7833a477d1a03a4e9da6b11",
+      "lastModificationDate": 1649549911761,
+      "contentHash": "608f7c6871c7de81e3c9c32501210213",
       "sourceName": "contracts/AgioGovernance.sol",
       "solcConfig": {
         "version": "0.8.4",
@@ -1531,6 +1533,84 @@
       ],
       "artifacts": [
         "Math"
+      ]
+    },
+    "/Users/chriswijnia/git/agio-dao/contracts/@openzeppelin/contracts/governance/compatibility/GovernorCompatibilityBravo.sol": {
+      "lastModificationDate": 1649509956461,
+      "contentHash": "d02562393627c383df919c9fccf2c5f6",
+      "sourceName": "contracts/@openzeppelin/contracts/governance/compatibility/GovernorCompatibilityBravo.sol",
+      "solcConfig": {
+        "version": "0.8.4",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../utils/Counters.sol",
+        "../../utils/math/SafeCast.sol",
+        "../extensions/IGovernorTimelock.sol",
+        "../Governor.sol",
+        "./IGovernorCompatibilityBravo.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "GovernorCompatibilityBravo"
+      ]
+    },
+    "/Users/chriswijnia/git/agio-dao/contracts/@openzeppelin/contracts/governance/compatibility/IGovernorCompatibilityBravo.sol": {
+      "lastModificationDate": 1649509956461,
+      "contentHash": "150a6426dc55ba789e76389d6893f908",
+      "sourceName": "contracts/@openzeppelin/contracts/governance/compatibility/IGovernorCompatibilityBravo.sol",
+      "solcConfig": {
+        "version": "0.8.4",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../IGovernor.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IGovernorCompatibilityBravo"
       ]
     }
   }

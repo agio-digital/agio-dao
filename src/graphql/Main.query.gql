@@ -1,0 +1,102 @@
+query Main($account: String!, $erc20: ID!, $governor: ID!) {
+  voting: votingContract(id: $erc20) {
+    totalWeight {
+      value
+    }
+    delegation {
+      id
+      delegator {
+        id
+      }
+      delegatee {
+        id
+      }
+    }
+    weight {
+      id
+      contract {
+        id
+      }
+      value
+      account {
+        id
+        voted {
+          proposal { proposalId }
+          id
+          reason
+          support { support}
+        }
+      }
+    }
+  }
+
+  erc20: erc20Contract(id: $erc20) {
+    id
+    decimals
+    symbol
+    name
+    totalSupply {
+      value
+    }
+    balances(where: {
+      account: $account
+    }) {
+      value
+      id
+      transferFromEvent {
+        value
+        from { id }
+        to { id }
+        contract { decimals }
+      }
+      transferToEvent {
+        value
+        from { id }
+        to { id }
+        contract { decimals }
+      }
+    }
+  }
+
+  governor(id: $governor) {
+    id
+    proposals(first: 300, orderBy: startBlock, orderDirection: desc) {
+      id
+      proposalId
+      description
+      canceled
+      executed
+      queued
+      executed
+      startBlock
+      endBlock
+      calls {
+        target { id }
+        calldata
+        value
+      }
+      proposer {
+        id
+      }
+      votecast(orderBy: timestamp, orderDirection: desc, first: 1000) {
+        id
+        timestamp
+        transaction {
+          blockNumber
+          id
+        }
+        receipt {
+          reason
+          weight
+          id
+          support {
+            support
+          }
+        }
+        voter {
+          id
+        }
+      }
+    }
+  }
+}

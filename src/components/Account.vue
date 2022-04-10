@@ -31,7 +31,7 @@
         Logout
       </button>
     </h4>
-    <div class="text-center" /> 
+    <div class="text-center" />
     <code
       class="cursor-pointer my-3 items-center rounded font-sans text-xs bg-slate-100 hover:bg-slate-200 transition duration-150 hover:shadow-md text-slate-600"
       @click="store.COPY(store.account)"
@@ -48,18 +48,42 @@
       target="_blank"
       :href="chain.addressUrl(store.account)"
       class="font-medium transition ml-auto text-sky-500 underline hover:text-sky-700 mr-3"
-    >View on Explorer<small>↗̱</small></a>
+    >
+      View on Explorer
+      <small>↗̱</small>
+    </a>
     <a
       target="_blank"
       :href="chain.nftAccountUrl(store.account)"
-      class="font-medium transition ml-auto text-sky-500 underline hover:text-sky-700"
-    >View on OpenSea<small>↗̱</small></a>
+      class="font-medium transition ml-auto text-sky-500 underline hover:text-sky-700 mr-3"
+    >
+      View on OpenSea
+      <small>↗̱</small>
+    </a>
+
+    <a
+      target="_blank"
+      :href="governor.subgraphUrl"
+      class="font-medium transition ml-auto text-sky-500 underline hover:text-sky-700 mr-3"
+    >
+      View Subgraph
+      <small>↗̱</small>
+    </a>
+
+    <a
+      target="_blank"
+      :href="governor.tallyUrl"
+      class="font-medium transition ml-auto text-sky-500 underline hover:text-sky-700 mr-3"
+    >
+      View on Tally
+      <small>↗̱</small>
+    </a>
     <!-- <button
       class="ml-3 font-medium transition text-sky-500 underline hover:text-sky-700"
       @click="store.COPY(store.account)"
     >
       Copy address 📋
-    </button> -->
+    </button>-->
 
     <hr class="my-5">
 
@@ -86,11 +110,12 @@ import { computed } from "vue";
 import { useStore } from '../store';
 import { useFormat } from '../hooks/useFormat';
 import { useChain } from '../hooks/useChain';
+import { useGovernorStore } from "../store/governor";
 
 const store = useStore();
 const format = useFormat();
 const chain = computed(() => useChain(store.chainId));
-
+const governor = useGovernorStore();
 </script>
 
 <style scoped>

@@ -57,9 +57,9 @@ export default defineComponent({
 
     <MediaPreview
       v-if="name"
-      :label="base64.startsWith('data:video') ? 'My Video ×' : 'My Image ×'"
+      :label="base64.startsWith('data:video') ? 'video' : base64.startsWith('data:image') ? 'image' : 'file'"
       :src="base64"
-      :type="base64.startsWith('data:video') ? 'video' : 'image'"
+      :type="base64.startsWith('data:video') ? 'video' : base64.startsWith('data:image') ? 'image' : 'file'"
       @click="el?.click()"
     />
 
