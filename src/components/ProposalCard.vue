@@ -92,8 +92,8 @@ const statusColor = (status: Status) => {
 }
 
 const totalFor = computed(() => proposal.value.votecast.filter(v => v.receipt.support.support === Support.For).length)
-const totalAgainst = computed(() => proposal.value.votecast.filter(v => v.receipt.support.support === Support.Abstain).length)
-const totalAbstain = computed(() => proposal.value.votecast.filter(v => v.receipt.support.support === Support.Against).length)
+const totalAbstain = computed(() => proposal.value.votecast.filter(v => v.receipt.support.support === Support.Abstain).length)
+const totalAgainst = computed(() => proposal.value.votecast.filter(v => v.receipt.support.support === Support.Against).length)
 const totalVoters = computed(() => uniqBy(proposal.value.votecast, v => v.voter.id).length)
 const totalVotes = computed(() => proposal.value.votecast.length);
 
