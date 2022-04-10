@@ -45,6 +45,7 @@ export interface Chain {
   erc20ContractBlock?: number;
   governorContractAddress?: string;
   governorContractBlock?: number;
+  blockSpeed?: number;
 }
 
 export enum ChainId {
@@ -71,6 +72,7 @@ const allChains: Chain[] = [
     tokenListUrl:
       "https://gist.githubusercontent.com/cwdx/5a38661dfa2f036252863c6cc6fdc551/raw/polygon-tokens.json?",
     logoURI: "https://wallet-asset.matic.network/img/tokens/matic.svg",
+    blockSpeed: 2 * 1000,
   },
   {
     id: ChainId.Mumbai,
@@ -84,6 +86,7 @@ const allChains: Chain[] = [
     tokenListUrl:
       "https://gist.githubusercontent.com/cwdx/5a38661dfa2f036252863c6cc6fdc551/raw/polygon-tokens.json?",
     swapUrl: "https://quickswap.exchange/#/swap",
+    blockSpeed: 15 * 1000,
   },
   {
     id: ChainId.Rinkeby,
@@ -135,6 +138,7 @@ const allChains: Chain[] = [
     rpcUrl: "https://mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161",
     swapUrl: "https://app.uniswap.org/#/swap",
     tokenListUrl: "https://www.gemini.com/uniswap/manifest.json",
+    blockSpeed: 13.19 * 1000,
   },
   {
     id: ChainId.Arbitrum,

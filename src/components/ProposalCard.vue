@@ -21,6 +21,7 @@ import EmptyState from "./EmptyState.vue";
 import { uniqBy } from "lodash";
 import Badge from "./Badge.vue";
 import BigNumber from "bignumber.js";
+import { formatMs } from "../hooks/useDay";
 
 const props = defineProps<{
   proposal: Proposal
@@ -271,6 +272,11 @@ const proposalUrl = computed(() => governor.tallyUrl + '/proposal/' + proposal.v
             title="expires at"
             :value="proposal.endBlock"
             :value-href="chain.blockUrl(proposal.endBlock)"
+          />
+
+          <ListItem
+            title="duration"
+            :value="formatMs((proposal.endBlock - proposal.startBlock) * chain.chain.value?.blockSpeed ?? 0)"
           />
 
           <ListItem
