@@ -4,10 +4,8 @@ import { computed, ref, defineEmits } from "vue";
 import { useIpfs } from "../hooks/useIpfs";
 import { useFormat } from "../hooks/useFormat";
 import { useStore } from "../store";
-import { ethers, FixedNumber } from "ethers";
+import { ethers } from "ethers";
 import ListItem from "./ListItem.vue";
-import { BN } from "../lib/utils";
-import BigNumber from "bignumber.js";
 
 const ipfs = useIpfs();
 const nftMinterStore = useNftMinterStore();
@@ -47,29 +45,11 @@ const mint = async () => {
     });
 };
 
-const mintFee = computed(() => ethers.BigNumber.from(nftMinterStore.mintFee));
-
-const formatToken = (value: string | number, decimals = 6) => {
+const _formatToken = (value: string | number, decimals = 6) => {
   const chain = store.chain;
   if (!chain) return "";
   return format.formatToken(value, store.chain.symbol, store.chain.decimals, decimals);
 };
-
-const vouchers = [0, 1, 20, 50];
-const selectedVoucher = ref(0);
-const setVoucher = ref(false);
-const customVoucher = computed({
-  get: () =>
-    new BigNumber(nftMinterStore.form.voucherValue ?? 0)
-      .div(new BigNumber(10).pow(store.chain?.decimals ?? 0))
-      .toNumber(),
-  set: (val) =>
-    nftMinterStore.PATCH_FORM({
-      voucherValue: !+val
-        ? "0"
-        : new BigNumber(10).pow(store.chain?.decimals ?? 0).times((val || 0)).toString()
-    }),
-});
 </script>
 
 <template>
@@ -92,26 +72,8 @@ const customVoucher = computed({
   />
 
   <ListItem
-    v-if="form.imageFile"
-    title="Image"
-  >
-    <template #value>
-      <StatusBadge
-        v-if="!form.metadataHash"
-        bg="slate-500"
-        v-text="'Ready for upload'"
-      />
-      <StatusBadge
-        v-else
-        bg="teal-400"
-        v-text="'Uploaded'"
-      />
-    </template>
-  </ListItem>
-
-  <ListItem
-    v-if="form.videoFile"
-    title="Video"
+    v-if="form.file"
+    title="Document"
   >
     <template #value>
       <StatusBadge
@@ -140,12 +102,6 @@ const customVoucher = computed({
     </template>
   </ListItem>
 
-  <ListItem
-    v-if="nftMinterStore.mintFee && store.chain"
-    title="Mint Fee"
-    :value="formatToken(mintFee.toString())"
-  />
-
   <div v-if="!form.tokenId || !form.metadataHash">
     <hr class="my-5">
 
@@ -164,67 +120,6 @@ const customVoucher = computed({
   </div>
 
   <div v-if="form.tokenId && form.metadataHash && !nftMinterStore.mintingMetaData">
-    <ListItem
-      v-if="nftMinterStore.mintFee && store.chain"
-      title="Voucher"
-    >
-      <template #value>
-        {{ formatToken(nftMinterStore.form.voucherValue || 0) }} -&nbsp;
-        <Button
-          variant="link"
-          @click="setVoucher = !setVoucher"
-          v-text="setVoucher ? 'cancel' : 'edit'"
-        />
-      </template>
-    </ListItem>
-
-    <div
-      v-if="setVoucher"
-      class="flex flex-row justify-between"
-    >
-      <Button
-        v-for="(voucher, i) of vouchers"
-        :key="i"
-        size="xxs"
-        class="truncate px-0 text-2xs"
-        style="width: calc(20% - 3px)"
-        :variant="
-          nftMinterStore.form.voucherValue === mintFee.mul(voucher).toString() &&
-            selectedVoucher !== Infinity
-            ? 'alternative'
-            : 'secondary'
-        "
-        @click="
-          selectedVoucher = i;
-          customVoucher = 0;
-          nftMinterStore.PATCH_FORM({
-            voucherValue: mintFee.mul(voucher).toString(),
-          });
-        "
-        v-text="formatToken(mintFee.mul(voucher).toString())"
-      />
-      <Button
-        size="xxs"
-        class="truncate px-0 text-2xs"
-        style="width: calc(20% - 3px)"
-        :variant="selectedVoucher === Infinity ? 'alternative' : 'secondary'"
-        @click="
-          selectedVoucher = Infinity;
-          nftMinterStore.PATCH_FORM({ voucherValue: undefined });
-        "
-        v-text="'Custom'"
-      />
-    </div>
-
-    <Input
-      v-if="selectedVoucher === Infinity && setVoucher"
-      v-model.number="customVoucher"
-      auto-focus
-      :placeholder="`Custom voucher in ${store.chain?.symbol}`"
-      type="number"
-      class="mb-1 mt-2"
-    />
-
     <ListItem title="Recipient">
       <template
         v-if="!toAddress"

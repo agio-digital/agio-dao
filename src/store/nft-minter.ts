@@ -13,7 +13,10 @@ import { id } from "ethers/lib/utils";
 import { getLogs } from "../lib/ethers";
 import { uniqBy } from "lodash";
 import { fileToHash } from "../lib/fs";
-import { TransferSingleEventFilter } from "../contracts/typechain-types/AgioERC1155";
+import {
+  TransferSingleEventFilter,
+  AgioERC1155 as IAgioERC1155,
+} from "../contracts/typechain-types/AgioERC1155";
 
 const IAgioERC1155 = AgioERC1155.abi;
 const ipfs = useIpfs();
@@ -39,7 +42,6 @@ export interface NftMinterState {
   mintingMetaData: boolean;
   mintingNft: boolean;
   mintedMetaData?: NFTMetaData;
-  mintFee?: string;
 }
 
 export interface NftEvent {
@@ -58,7 +60,6 @@ export interface Nft {
   metadata?: NFTMetaData;
   status?: "pending" | "minting" | "confirmed" | "transfering";
   covalentData?: NftData;
-  likes?: number;
   metadataHash?: string;
   minter?: string;
   owner?: string;
@@ -91,11 +92,10 @@ export const useNftMinterStore = defineStore("nft-minter", {
     mintingMetaData: false,
     mintingNft: false,
     mintedMetaData: undefined,
-    mintFee: undefined,
   }),
   persist: {
     key: "agiodao:pinia:nft-minter",
-    paths: ["nfts", "balances", "form", "mintFee"],
+    paths: ["nfts", "balances", "form"],
   },
   actions: {
     GET_CONTRACT(withSigner?: boolean) {
@@ -108,7 +108,7 @@ export const useNftMinterStore = defineStore("nft-minter", {
         address,
         IAgioERC1155,
         provider
-      ) as unknown as NFTDegenV2;
+      ) as unknown as IAgioERC1155;
 
       return DegenContract;
     },
@@ -312,7 +312,6 @@ export const useNftMinterStore = defineStore("nft-minter", {
         id: tokenId,
         metadata,
         metadataHash,
-        likes: 0,
         minter: ethers.utils.getAddress(parent.account),
         owner: ethers.utils.getAddress(owner),
         name: this.form.name,
@@ -372,7 +371,6 @@ export const useNftMinterStore = defineStore("nft-minter", {
         tokens.forEach((token) => {
           this.PATCH_NFT({
             id: token.id.toNumber(),
-            likes: token.likes,
             owner: ethers.utils.getAddress(token.owner),
             minter: ethers.utils.getAddress(token.minter),
             previousOwner: ethers.utils.getAddress(token.previousOwner),
@@ -388,10 +386,6 @@ export const useNftMinterStore = defineStore("nft-minter", {
             this.PATCH_NFT(nft);
             if (i === tokens.length - 1) this.MY_BALANCES();
           });
-
-        console.log(this.nfts);
-
-        contract.mintFee().then((fee) => (this.mintFee = fee.toString()));
       } finally {
         this.listing = false;
         clearTimeout(timeout);

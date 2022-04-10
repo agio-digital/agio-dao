@@ -1,12 +1,12 @@
 import { LogDescription } from "ethers/lib/utils";
-import { AgioSMARTDAO } from "../contracts/typechain-types/AgioSMARTDAO";
+import { AgioERC1155 } from "../contracts/typechain-types";
 import {
   TypedEvent,
   TypedEventFilter,
 } from "../contracts/typechain-types/common";
 
 export const getLogs = async <T extends TypedEvent>(
-  contract: AgioSMARTDAO,
+  contract: AgioERC1155,
   filter: TypedEventFilter<T>
 ) => {
   const logs = await contract.provider.getLogs(filter);

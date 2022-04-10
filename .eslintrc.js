@@ -1,18 +1,17 @@
 module.exports = {
-  "root": true,
-  "env": {
-    "browser": true,
-    "es2021": true,
-    "node": true
+  root: true,
+  env: {
+    browser: true,
+    es2021: true,
+    node: true,
   },
-  "plugins": [
-  ],
+  plugins: [],
   extends: [
     "plugin:vue/vue3-recommended",
     "eslint:recommended",
-    "@vue/typescript/recommended"
+    "@vue/typescript/recommended",
   ],
-  "ignorePatterns": ["test/*.js", "dist/**/*.js", "migrations/*.js"],
+  ignorePatterns: ["test/*.js", "dist/**/*.js", "migrations/*.js"],
   rules: {
     // override/add rules settings here, such as:
     "@typescript-eslint/no-explicit-any": "off",
@@ -21,11 +20,19 @@ module.exports = {
     "@typescript-eslint/no-non-null-assertion": "off",
     "@typescript-eslint/ban-ts-comment": "off",
     "vue/multi-word-component-names": "off",
-    'vue/no-unused-vars': 'error',
+    "vue/no-unused-vars": "error",
     "vue/no-useless-template-attributes": "off",
     "vue/require-default-prop": "off",
     "vue/no-v-html": "off",
     "vue/no-template-shadow": "off",
-    "vue/v-on-event-hyphenation": "off"
+    "vue/v-on-event-hyphenation": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      {
+        argsIgnorePattern: "^_",
+        varsIgnorePattern: "^_",
+        caughtErrorsIgnorePattern: "^_",
+      },
+    ],
   },
-}
+};
