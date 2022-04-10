@@ -1,0 +1,29 @@
+[
+  {
+    "deployedAt": 1649602899830,
+    "chainId": 4,
+    "address": "0x4DdBBCb2804BFFb395cebB8e66082f7e505809c3",
+    "deployerAddress": "0x34F203309F3AaA05B54e8372Ba3f6E1329Ef2823",
+    "name": "AgioERC1155",
+    "dataHash": "0x39bef1777deb3dfb14f64b9f81ced092c501fee72f90e93d03bb95ee89df9837",
+    "block": 10480627
+  },
+  {
+    "deployedAt": 1649602899829,
+    "chainId": 4,
+    "address": "0x9147Ab036462D17454124143BCc516938015FCf2",
+    "deployerAddress": "0x34F203309F3AaA05B54e8372Ba3f6E1329Ef2823",
+    "name": "AgioSMARTDAO",
+    "dataHash": "0x39bef1777deb3dfb14f64b9f81ced092c501fee72f90e93d03bb95ee89df9837",
+    "block": 10480627
+  },
+  {
+    "deployedAt": 1649602899825,
+    "chainId": 4,
+    "address": "0x94455Be3FE237522695B10A18ce46c9b845D0376",
+    "deployerAddress": "0x34F203309F3AaA05B54e8372Ba3f6E1329Ef2823",
+    "name": "AgioGovernance",
+    "dataHash": "0x39bef1777deb3dfb14f64b9f81ced092c501fee72f90e93d03bb95ee89df9837",
+    "block": 10480627
+  }
+]

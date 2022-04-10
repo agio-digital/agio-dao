@@ -86,7 +86,7 @@ const allChains: Chain[] = [
     tokenListUrl:
       "https://gist.githubusercontent.com/cwdx/5a38661dfa2f036252863c6cc6fdc551/raw/polygon-tokens.json?",
     swapUrl: "https://quickswap.exchange/#/swap",
-    blockSpeed: 15 * 1000,
+    blockSpeed: 5 * 1000,
   },
   {
     id: ChainId.Rinkeby,
