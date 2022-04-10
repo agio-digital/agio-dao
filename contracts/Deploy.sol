@@ -19,5 +19,7 @@ contract Deploy {
     token = new AgioGovernance("Agio Governance Token", "AGIO", initialSupply, account);
     nft = new AgioERC1155("Agio Approved Investment Proposal", "SMART");
     dao = new AgioSMARTDAO("Agio SMART DAO", token, nft);
+    nft.transferOwnership(address(dao));
+    token.transferOwnership(msg.sender);
   }
 }

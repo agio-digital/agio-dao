@@ -10,8 +10,8 @@ import "hardhat/console.sol";
 
 /// @custom:security-contact devs@agiodigital.com
 contract AgioGovernance is ERC20, Pausable, Ownable, ERC20Permit, ERC20Votes {
-    uint maxSupply = 5000 * 10 ** super.decimals();
-    uint256 public tokenPrice = 0.25 ether;
+    uint maxSupply = 500 * 10 ** super.decimals();
+    uint256 public tokenPrice = 0.0025 ether;
 
     constructor(string memory _name, string memory _symbol, uint _initialSupply, address _reciever) ERC20(_name, _symbol) ERC20Permit(_name) {
         _mint(_reciever, _initialSupply);

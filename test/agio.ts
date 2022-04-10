@@ -43,21 +43,21 @@ describe("Deploy", () => {
     const buyer2 = signers[3];
 
     await token.connect(buyer).mint({
-      value: utils.parseEther("1000"),
+      value: utils.parseEther("0.1"),
     });
 
     await token.connect(buyer).mintTo(buyer2.address, {
-      value: utils.parseEther("250"),
+      value: utils.parseEther("0.025"),
     });
 
     const balance = await token.balanceOf(buyer.address);
     const balance2 = await token.balanceOf(buyer2.address);
 
-    expect(balance).to.equal(utils.parseEther("4000"));
-    expect(balance2).to.equal(utils.parseEther("1000"));
+    expect(balance).to.equal(utils.parseEther("40"));
+    expect(balance2).to.equal(utils.parseEther("10"));
 
     const totalSupply = await token.totalSupply();
 
-    expect(totalSupply).to.equal(utils.parseEther("5000"));
+    expect(totalSupply).to.equal(utils.parseEther("50"));
   });
 });

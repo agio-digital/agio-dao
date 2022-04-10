@@ -592,8 +592,8 @@
       ]
     },
     "/Users/chriswijnia/git/agio-dao/contracts/AgioSMARTDAO.sol": {
-      "lastModificationDate": 1649510086401,
-      "contentHash": "10f90683623de4f8994838c92a86a3a2",
+      "lastModificationDate": 1649598894394,
+      "contentHash": "4e551a7d9fbdbf9336b2d9d6fad9b544",
       "sourceName": "contracts/AgioSMARTDAO.sol",
       "solcConfig": {
         "version": "0.8.4",
@@ -1119,8 +1119,8 @@
       ]
     },
     "/Users/chriswijnia/git/agio-dao/contracts/Deploy.sol": {
-      "lastModificationDate": 1649550478855,
-      "contentHash": "3ead2309daf61dbc029fbb7021ef3438",
+      "lastModificationDate": 1649598629996,
+      "contentHash": "99df0492442abe6e3f1f84accbc7f7a6",
       "sourceName": "contracts/Deploy.sol",
       "solcConfig": {
         "version": "0.8.4",
@@ -1159,8 +1159,8 @@
       ]
     },
     "/Users/chriswijnia/git/agio-dao/contracts/AgioGovernance.sol": {
-      "lastModificationDate": 1649549911761,
-      "contentHash": "608f7c6871c7de81e3c9c32501210213",
+      "lastModificationDate": 1649598585913,
+      "contentHash": "7f28b9b2d453a14f6ea975fa16518b02",
       "sourceName": "contracts/AgioGovernance.sol",
       "solcConfig": {
         "version": "0.8.4",

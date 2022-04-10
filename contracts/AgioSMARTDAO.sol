@@ -16,9 +16,9 @@ contract AgioSMARTDAO is Governor, GovernorSettings, GovernorCountingSimple, Gov
 
     constructor(string memory _name, IVotes _token, AgioERC1155 _nft)
         Governor(_name)
-        GovernorSettings(1 /* 1 block */, 26182 /* 4 days */, 0)
+        GovernorSettings(1 /* 1 block */, 136 /* 30 minutes */, 0)
         GovernorVotes(_token)
-        GovernorVotesQuorumFraction(4)
+        GovernorVotesQuorumFraction(25)
     {
         nft = _nft;
     }
