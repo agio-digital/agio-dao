@@ -276,7 +276,7 @@ const proposalUrl = computed(() => governor.tallyUrl + '/proposal/' + proposal.v
 
           <ListItem
             title="duration"
-            :value="formatMs((proposal.endBlock - proposal.startBlock) * chain.chain.value?.blockSpeed ?? 0)"
+            :value="formatMs((proposal.endBlock - proposal.startBlock) * (chain?.chain?.value?.blockSpeed || 0))"
           />
 
           <ListItem
